@@ -1,15 +1,15 @@
-import React, { FunctionComponent, useContext } from "react";
-import { useForm } from "antd/lib/form/Form";
-import { Card, Form, Row, Col, Input, Button } from "antd";
+import React, { FunctionComponent, useContext } from 'react'
+import { useForm } from 'antd/lib/form/Form'
+import { Card, Form, Row, Col, Input, Button } from 'antd'
+import { useHistory } from 'react-router-dom'
 
-import { CompanyContext } from "../../contexts/CompanyContext";
+import { login } from '../../requests'
+import { CompanyContext } from '../../contexts/CompanyContext'
 
-import StyledTitle from "../../components/StyledTitle";
+import StyledTitle from '../../components/StyledTitle'
 import Notification from '../../helpers/notification'
-import api from '../../config/api'
 
-import "./styles.scss";
-import { useHistory } from "react-router-dom";
+import './styles.scss'
 
 const LoginPage: FunctionComponent = () => {
   const [form] = useForm()
@@ -20,18 +20,18 @@ const LoginPage: FunctionComponent = () => {
 
   const onFinish = async (values: { email: string, password: string }) => {
     try {
-      const { data } = await api.post("/companies/authenticate", {
+      const { data } = await login({
         email: values.email,
         password: values.password
       })
 
       authenticate(data.company, data.token)
 
-      push("/company")
+      push('/company')
 
-      Notification.success("Sucesso", "Login efetuado com sucesso")
+      Notification.success('Sucesso', 'Login efetuado com sucesso')
     } catch (error) {
-      Notification.error("Erro", error.response.data.message)
+      Notification.error('Erro', error.response.data.message)
     }
   }
 
@@ -49,11 +49,11 @@ const LoginPage: FunctionComponent = () => {
           <Row gutter={24}>
             <Col span={24}>
               <Form.Item
-                label={"Email"}
-                name={"email"}
+                label={'Email'}
+                name={'email'}
                 rules={[{
                   required: true,
-                  message: "Email é obrigatório",
+                  message: 'Email é obrigatório'
                 }]}
               >
                 <Input />
@@ -64,11 +64,11 @@ const LoginPage: FunctionComponent = () => {
           <Row gutter={24}>
             <Col span={24}>
               <Form.Item
-                label={"Senha"}
-                name={"password"}
+                label={'Senha'}
+                name={'password'}
                 rules={[{
                   required: true,
-                  message: "Senha é obrigatório"
+                  message: 'Senha é obrigatório'
                 }]}
               >
                 <Input type="password" />
@@ -79,8 +79,8 @@ const LoginPage: FunctionComponent = () => {
           <Row gutter={24}>
             <Col span={24}>
               <Button
-                type={"primary"}
-                className={"submit-button"}
+                type={'primary'}
+                className={'submit-button'}
                 onClick={() => form.submit()}
               >
                 Entrar
@@ -91,7 +91,7 @@ const LoginPage: FunctionComponent = () => {
       </Card>
 
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

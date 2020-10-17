@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { removeTokenFromLocalStorage, removeCompanyFromLocalStorage, setCompanyToLocalStorage, setTokenToLocalStorage } from "../../helpers/localStorage";
 
 import Company from "../../interfaces/Company";
@@ -51,6 +50,7 @@ const CompanyProvider: FunctionComponent = ({ children }) => {
     if (companyStorage) {
       setIsAuthenticated(true)
       setCompany(JSON.parse(companyStorage))
+      setIsAdmin(JSON.parse(companyStorage).is_admin)
     }
   }, [])
 

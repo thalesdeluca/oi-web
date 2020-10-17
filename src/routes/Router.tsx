@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
 
 import Menu from "../layout/Menu";
-import CompanyPage from "../pages/company";
-import CompanyCategoryPage from "../pages/companyCategory";
-import LoginPage from "../pages/login";
+import CompanyPage from "../pages/Company";
+import CompanyCategoryPage from "../pages/CompanyCategory";
+import LoginPage from "../pages/Login";
 import PrivateRoute from './PrivateRoute'
 
-import { useAuthGuard, useAdminGuard } from "../helpers/localStorage";
 import { adminMenu, companyMenu } from "../layout/items";
 import { CompanyContext } from "../contexts/CompanyContext";
 

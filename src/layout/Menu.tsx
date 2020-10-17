@@ -38,7 +38,7 @@ const Menu: React.FC<MenuProps> = ({ routes, children }) => {
 
       <Layout className="site-layout">
         <Header className="site-layout-background header">
-          <AntMenu theme="light" mode="horizontal" className={"header-menu"}>
+          <AntMenu theme="dark" mode="horizontal" className={"header-menu"}>
             <AntMenu.SubMenu
               key="SubMenu"
               icon={<UserOutlined />}

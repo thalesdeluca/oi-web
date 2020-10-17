@@ -1,10 +1,5 @@
 import React, { FunctionComponent } from "react";
 
-interface Props {
-  children: object;
-  route: object;
-}
-
 const CompanyPage: FunctionComponent = () => {
   return (
     <div>
