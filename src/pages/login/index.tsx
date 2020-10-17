@@ -11,7 +11,7 @@ import api from '../../config/api'
 import "./styles.scss";
 import { useHistory } from "react-router-dom";
 
-const LoginScreen: FunctionComponent = () => {
+const LoginPage: FunctionComponent = () => {
   const [form] = useForm()
 
   const { push } = useHistory()
@@ -94,4 +94,4 @@ const LoginScreen: FunctionComponent = () => {
   );
 };
 
-export default LoginScreen;
+export default LoginPage;

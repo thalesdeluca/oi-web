@@ -1,16 +1,16 @@
-.sider {
-  overflow: auto;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  max-width: 200px;
-}
-
-.content {
-  margin: 0 200px;
+.sider-header {
+  color: white;
+  font-size: 2em;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 0;
 }
 
 .header {
-  color: white;
-  font-size: 2em;
+  background-color: #fff;
+  padding: 0px;
+}
+
+.header-menu {
+  float: right;
 }

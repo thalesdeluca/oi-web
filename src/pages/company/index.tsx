@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 
 interface Props {
   children: object;
   route: object;
 }
 
-const CompanyPage: React.FC<Props> = () => {
+const CompanyPage: FunctionComponent = () => {
   return (
     <div>
       <span>company page</span>

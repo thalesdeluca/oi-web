@@ -20,4 +20,14 @@ const useAuthGuard = () => {
   return Boolean(localStorage.getItem("delivery@access_token"));
 };
 
-export { setTokenToLocalStorage, removeTokenFromLocalStorage, setCompanyToLocalStorage, removeCompanyFromLocalStorage, useAuthGuard }
+const useAdminGuard = () => {
+  const companyStorage = localStorage.getItem("delivery@company")
+
+  if (companyStorage) {
+    return JSON.parse(companyStorage).is_admin
+  }
+
+  return false;
+};
+
+export { setTokenToLocalStorage, removeTokenFromLocalStorage, setCompanyToLocalStorage, removeCompanyFromLocalStorage, useAuthGuard, useAdminGuard }
