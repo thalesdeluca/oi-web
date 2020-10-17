@@ -4,15 +4,20 @@ import "./styles.scss";
 import { MenuItem } from "./items";
 const { Header, Content, Footer, Sider } = Layout;
 
-interface Props {
+interface MenuProps {
   routes: Array<MenuItem>;
   children: object;
 }
 
-const Menu: React.FC<Props> = ({ routes, children }) => {
+const Menu: React.FC<MenuProps> = ({ routes, children }) => {
   return (
     <Layout>
-      <Header className="header">Header</Header>
+      <Header
+        className="header"
+      >
+        Delivery
+      </Header>
+
       <Layout>
         <Sider className="site-layout-background sider">
           <AntMenu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>

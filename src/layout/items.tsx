@@ -3,7 +3,7 @@ import {
   UserOutlined,
   BookOutlined,
   CoffeeOutlined,
-  ShoppingFilled,
+  PoweroffOutlined, ShoppingOutlined
 } from "@ant-design/icons";
 
 export interface MenuItem {
@@ -25,7 +25,7 @@ export const authMenu: Array<MenuItem> = [
     name: "Produtos",
   },
   {
-    icon: <ShoppingFilled />,
+    icon: <ShoppingOutlined />,
     name: "Pedidos",
   },
 ];

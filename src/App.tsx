@@ -1,13 +1,16 @@
 import React from "react";
 import StoreProvider from "./components/StoreProvider";
-import Router from "./navigation/Router";
+import CompanyProvider from "./contexts/CompanyContext";
+import Router from "./routes/Router";
 
 function App() {
   return (
     <main>
-      <StoreProvider>
-        <Router />
-      </StoreProvider>
+      <CompanyProvider>
+        <StoreProvider>
+          <Router />
+        </StoreProvider>
+      </CompanyProvider>
     </main>
   );
 }

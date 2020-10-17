@@ -5,12 +5,12 @@ interface Props {
   route: object;
 }
 
-const LoginScreen: React.FC<Props> = () => {
+const CompanyPage: React.FC<Props> = () => {
   return (
     <div>
-      <span>login Screen</span>
+      <span>company page</span>
     </div>
   );
 };
 
-export default LoginScreen;
+export default CompanyPage;
