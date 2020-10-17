@@ -2,24 +2,24 @@ import React, { FunctionComponent, useContext, useEffect } from "react";
 import { Table, Space, Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import CompanyCategory from "../../../interfaces/CompanyCategory";
+import ProductCategory from "../../../interfaces/ProductCategory";
 
-import { CompanyCategoryContext } from "../../../contexts/CompanyCategoryContext";
-import { deleteCompanyCategory, getCompanyCategories } from "../../../requests";
+import { ProductCategoryContext } from "../../../contexts/ProductCategoryContext";
+import { deleteProductCategory, getProductCategories } from "../../../requests";
 
 import Notification from '../../../helpers/notification'
 
 const { Column } = Table
 
-const CompanyCategoryTable: FunctionComponent = () => {
+const ProductCategoryTable: FunctionComponent = () => {
 
-  const { companyCategories, setCompanyCategories } = useContext(CompanyCategoryContext)
+  const { productCategories, setProductCategories } = useContext(ProductCategoryContext)
 
   const getData = async () => {
     try {
-      const { data } = await getCompanyCategories({})
+      const { data } = await getProductCategories({})
 
-      setCompanyCategories(data)
+      setProductCategories(data)
     } catch (error) {
       Notification.error('Erro', error.response.data.message)
     }
@@ -32,9 +32,9 @@ const CompanyCategoryTable: FunctionComponent = () => {
 
   const confirm = async (id: number) => {
     try {
-      await deleteCompanyCategory({ id })
+      await deleteProductCategory({ id })
 
-      setCompanyCategories(companyCategories.filter(companyCategory => companyCategory.id !== id))
+      setProductCategories(productCategories.filter(productCategory => productCategory.id !== id))
 
       Notification.success('Sucesso', 'Categoria deletada com sucesso')
     } catch (error) {
@@ -43,19 +43,19 @@ const CompanyCategoryTable: FunctionComponent = () => {
   }
 
   return (
-    <Table<CompanyCategory>
-      dataSource={companyCategories}
-      rowKey={companyCategory => `${companyCategory.id}`}
+    <Table<ProductCategory>
+      dataSource={productCategories}
+      rowKey={productCategory => `${productCategory.id}`}
     >
-      <Column<CompanyCategory> title="Categoria" dataIndex="name" key="name" />
-      <Column<CompanyCategory>
+      <Column<ProductCategory> title="Categoria" dataIndex="name" key="name" />
+      <Column<ProductCategory>
         title="Ação"
         key="action"
-        render={(text, companyCategory) => (
+        render={(text, productCategory) => (
           <Space size="middle">
             <Popconfirm
               title="Deseja realmente deletar esta categoria?"
-              onConfirm={() => confirm(companyCategory.id)}
+              onConfirm={() => confirm(productCategory.id)}
               okText="Yes"
               cancelText="No"
             >
@@ -70,4 +70,4 @@ const CompanyCategoryTable: FunctionComponent = () => {
   );
 };
 
-export default CompanyCategoryTable;
+export default ProductCategoryTable;

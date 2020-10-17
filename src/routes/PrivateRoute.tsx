@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import { CompanyContext } from "../contexts/CompanyContext";
+import { getToken } from "../helpers/localStorage";
 
 const PrivateRoute: React.FC<{
   component: React.FC;
@@ -9,15 +10,15 @@ const PrivateRoute: React.FC<{
   exact: boolean;
 }> = (props) => {
 
-  const { isAuthenticated } = useContext(CompanyContext)
+  const hasToken = getToken()
 
-  return isAuthenticated
+  return hasToken
     ? (
       <Route path={props.path} exact={props.exact} component={props.component} />
     )
     :
     (
-      <Redirect to="/page/login" />
+      <Redirect to="/login" />
     );
 };
 

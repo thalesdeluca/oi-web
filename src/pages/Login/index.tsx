@@ -27,7 +27,7 @@ const LoginPage: FunctionComponent = () => {
 
       authenticate(data.company, data.token)
 
-      push('/company')
+      push('/dashboard')
 
       Notification.success('Sucesso', 'Login efetuado com sucesso')
     } catch (error) {

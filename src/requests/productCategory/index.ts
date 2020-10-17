@@ -2,10 +2,10 @@ import { getToken } from '../../helpers/localStorage'
 
 import api from '../../config/api'
 
-const createCompanyCategory = ({ name }: { name: string}) => {
+const createProductCategory = ({ name }: { name: string}) => {
   const token = getToken()
 
-  return api.post('/company-categories', {
+  return api.post('/product-categories', {
     name
   }, {
     headers: {
@@ -14,20 +14,20 @@ const createCompanyCategory = ({ name }: { name: string}) => {
   })
 }
 
-const deleteCompanyCategory = ({ id }: { id: number }) => {
+const deleteProductCategory = ({ id }: { id: number }) => {
   const token = getToken()
 
-  return api.delete(`/company-categories/${id}`, {
+  return api.delete(`/product-categories/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   })
 }
 
-const getCompanyCategories = ({}: {}) => {
+const getProductCategories = ({}: {}) => {
   const token = getToken()
 
-  return api.get('/company-categories', {
+  return api.get('/product-categories', {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -35,7 +35,7 @@ const getCompanyCategories = ({}: {}) => {
 }
 
 export {
-  createCompanyCategory,
-  getCompanyCategories,
-  deleteCompanyCategory
+  createProductCategory,
+  getProductCategories,
+  deleteProductCategory
 }

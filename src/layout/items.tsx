@@ -3,7 +3,6 @@ import {
   UserOutlined,
   BookOutlined,
   CoffeeOutlined,
-  PoweroffOutlined,
   ShoppingOutlined
 } from "@ant-design/icons";
 
@@ -20,11 +19,6 @@ export const companyMenu: Array<MenuItem> = [
     to: "/profile"
   },
   {
-    icon: <BookOutlined />,
-    name: "Categoria",
-    to: "/category"
-  },
-  {
     icon: <CoffeeOutlined />,
     name: "Produtos",
     to: '/product'
@@ -38,24 +32,14 @@ export const companyMenu: Array<MenuItem> = [
 
 export const adminMenu: Array<MenuItem> = [
   {
-    icon: <UserOutlined />,
-    name: "Perfil",
-    to: "/profile"
-  },
-  {
     icon: <BookOutlined />,
     name: "Categorias de Empresa",
     to: "/company-category"
   },
   {
-    icon: <CoffeeOutlined />,
-    name: "Produtos",
-    to: '/product'
-  },
-  {
-    icon: <ShoppingOutlined />,
-    name: "Pedidos",
-    to: "order"
+    icon: <BookOutlined />,
+    name: "Categorias de Produtos",
+    to: "/product-category"
   },
 ];
 
