@@ -5,6 +5,7 @@ import Menu from "../layout/Menu";
 import CompanyPage from "../pages/Company";
 import CompanyCategoryPage from "../pages/CompanyCategory";
 import ProductCategoryPage from "../pages/ProductCategory";
+import ProductPage from "../pages/Product";
 import LoginPage from "../pages/Login";
 import PrivateRoute from './PrivateRoute'
 
@@ -23,6 +24,7 @@ const Router: React.FC = () => {
           <PrivateRoute exact path="/company" component={CompanyPage} />
           <PrivateRoute exact path="/company-category" component={CompanyCategoryPage} />
           <PrivateRoute exact path="/product-category" component={ProductCategoryPage} />
+          <PrivateRoute exact path="/product" component={ProductPage} />
         </Menu>
       </Switch>
     </BrowserRouter>

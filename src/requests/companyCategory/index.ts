@@ -2,7 +2,7 @@ import { getToken } from '../../helpers/localStorage'
 
 import api from '../../config/api'
 
-const createCompanyCategory = ({ name }: { name: string}) => {
+const createCompanyCategory = async ({ name }: { name: string}) => {
   const token = getToken()
 
   return api.post('/company-categories', {
@@ -14,7 +14,7 @@ const createCompanyCategory = ({ name }: { name: string}) => {
   })
 }
 
-const deleteCompanyCategory = ({ id }: { id: number }) => {
+const deleteCompanyCategory = async ({ id }: { id: number }) => {
   const token = getToken()
 
   return api.delete(`/company-categories/${id}`, {
@@ -24,7 +24,7 @@ const deleteCompanyCategory = ({ id }: { id: number }) => {
   })
 }
 
-const getCompanyCategories = ({}: {}) => {
+const getCompanyCategories = async ({}: {}) => {
   const token = getToken()
 
   return api.get('/company-categories', {

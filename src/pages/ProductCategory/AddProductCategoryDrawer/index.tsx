@@ -25,6 +25,7 @@ const AddProductCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
 
   const close = (): void => {
     setVisible(false)
+    form.resetFields()
   }
 
   const onFinish = async (values: { name: string }) => {

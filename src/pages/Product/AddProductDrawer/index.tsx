@@ -1,19 +1,20 @@
 import React, { forwardRef, ForwardRefRenderFunction, FunctionComponent, useContext, useImperativeHandle, useState } from 'react'
 import { useForm } from 'antd/lib/form/Form'
-import { Form, Row, Col, Input, Button, Drawer, Space } from 'antd'
+import { Form, Row, Col, Input, Button, Drawer, Space, InputNumber } from 'antd'
 
 import StyledTitle from '../../../components/StyledTitle'
 import Notification from '../../../helpers/notification'
 
-import { CompanyCategoryContext } from '../../../contexts/CompanyCategoryContext'
-import { createCompanyCategory } from '../../../requests'
+import { ProductContext } from '../../../contexts/ProductContext'
+import { createProduct } from '../../../requests'
+import { formatPriceToSave } from '../../../helpers/formatters'
 
-const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
+const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
   const [form] = useForm()
 
   const [visible, setVisible] = useState<boolean>(false)
 
-  const { companyCategories, setCompanyCategories } = useContext(CompanyCategoryContext)
+  const { products, setProducts } = useContext(ProductContext)
 
   useImperativeHandle(ref, () => ({
     open
@@ -28,15 +29,16 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
     form.resetFields()
   }
 
-  const onFinish = async (values: { name: string }) => {
+  const onFinish = async (values: { name: string, price: number }) => {
     try {
-      const { data } = await createCompanyCategory({
-        name: values.name
+      const { data } = await createProduct({
+        name: values.name,
+        price: formatPriceToSave(values.price)
       })
 
-      setCompanyCategories([...companyCategories, data])
+      setProducts([...products, data])
 
-      Notification.success('Sucesso', 'Categoria de empresa cadastrada com sucesso')
+      Notification.success('Sucesso', 'Produto cadastrado com sucesso')
 
       close()
     } catch (error) {
@@ -50,7 +52,7 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
       closable={true}
       onClose={close}
       placement="right"
-      title={<StyledTitle level={2}>Nova Categoria de Empresa</StyledTitle>}
+      title={<StyledTitle level={2}>Novo Produto</StyledTitle>}
       width={720}
       destroyOnClose={true}
       footer={
@@ -66,7 +68,7 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
       }
     >
       <Form onFinish={onFinish} layout="vertical" form={form}>
-        <Row>
+        <Row gutter={24}>
           <Col lg={{ span: '24' }}>
             <Form.Item
               label="Nome"
@@ -77,9 +79,25 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
             </Form.Item>
           </Col>
         </Row>
+
+        <Row gutter={24}>
+          <Col lg={{ span: '24' }}>
+            <Form.Item
+              label="Preço"
+              name="price"
+              rules={[{ required: true }]}
+            >
+              <InputNumber
+                style={{ width: '100%' }}
+                formatter={value => `$ ${value}`.replace(/\B(?=(\d{2})+(?!\d))/g, ',')}
+                parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </Drawer>
   )
 }
 
-export default forwardRef(AddCompanyCategoryDrawer)
+export default forwardRef(AddProductDrawer)
