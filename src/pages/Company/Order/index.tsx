@@ -1,29 +1,27 @@
-import React, { FunctionComponent, useRef } from 'react'
-import { Button } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import React, { FunctionComponent } from 'react'
 
 import StyledTitle from '../../../components/StyledTitle'
 import ContentCard from '../../../components/ContentCard'
 import ContentHeader from '../../../components/ContentHeader'
-import ProductTable from './OrderTable'
+import OrderTable from './OrderTable'
 
-import ProductProvider from '../../../contexts/ProductContext'
+import OrderProvider from '../../../contexts/OrderContext'
 
 import './styles.scss'
 
 const OrderPage: FunctionComponent = () => {
 
   return (
-    <ProductProvider>
+    <OrderProvider>
       <ContentHeader>
         <StyledTitle level={2}>Pedidos</StyledTitle>
 
       </ContentHeader>
 
       <ContentCard>
-        <ProductTable />
+        <OrderTable />
       </ContentCard>
-    </ProductProvider>
+    </OrderProvider>
   )
 }
 

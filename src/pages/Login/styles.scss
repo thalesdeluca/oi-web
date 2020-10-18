@@ -5,10 +5,22 @@
 }
 
 .login-card {
-  width: 600px;
+  width: 900px;
   background-color: #fff;
 }
 
 .submit-button {
+  width: 100%;
+}
+
+.register-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.delivery-image {
+  background-image: url('../../assets/images/login-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100%;
 }

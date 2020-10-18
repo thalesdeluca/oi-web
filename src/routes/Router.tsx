@@ -7,6 +7,7 @@ import ProductCategoryPage from "../pages/Admin/ProductCategory";
 import ProductPage from "../pages/Company/Product";
 import OrderPage from "../pages/Company/Order";
 import LoginPage from "../pages/Login";
+import ProfilePage from "../pages/Company/Profile";
 import PrivateRoute from './PrivateRoute'
 
 import { adminMenu, companyMenu } from "../layout/items";
@@ -21,6 +22,7 @@ const Router: React.FC = () => {
         <Route path="/login" component={LoginPage} />
 
         <Menu routes={isAdmin ? adminMenu : companyMenu}>
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
           <PrivateRoute exact path="/company-category" component={CompanyCategoryPage} />
           <PrivateRoute exact path="/product-category" component={ProductCategoryPage} />
           <PrivateRoute exact path="/product" component={ProductPage} />

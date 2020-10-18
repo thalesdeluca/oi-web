@@ -41,7 +41,7 @@ const deleteProduct = async ({ id }: { id: number }) => {
 const getOwnProducts = async ({}: {}) => {
   const token = getToken()
 
-  return api.get('/products/me', {
+  return api.get('/me/products', {
     headers: {
       Authorization: `Bearer ${token}`
     }

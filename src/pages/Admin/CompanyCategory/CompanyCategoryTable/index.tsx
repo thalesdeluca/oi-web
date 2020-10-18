@@ -29,7 +29,6 @@ const CompanyCategoryTable: FunctionComponent = () => {
     getData()
   }, [])
 
-
   const confirm = async (id: number) => {
     try {
       await deleteCompanyCategory({ id })
