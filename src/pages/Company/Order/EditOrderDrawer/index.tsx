@@ -2,26 +2,34 @@ import React, { forwardRef, ForwardRefRenderFunction, FunctionComponent, useCont
 import { useForm } from 'antd/lib/form/Form'
 import { Form, Row, Col, Input, Button, Drawer, Space, InputNumber } from 'antd'
 
-import StyledTitle from '../../../components/StyledTitle'
-import Notification from '../../../helpers/notification'
+import StyledTitle from '../../../../components/StyledTitle'
+import Notification from '../../../../helpers/notification'
+import Order from '../../../../interfaces/Order'
 
-import { ProductContext } from '../../../contexts/ProductContext'
-import { createProduct } from '../../../requests'
-import { formatPriceToSave } from '../../../helpers/formatters'
+import { OrderContext } from '../../../../contexts/OrderContext'
+import { updateOrder } from '../../../../requests'
+import { formatPriceToSave } from '../../../../helpers/formatters'
 
-const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
+const EditOrderDrawer: ForwardRefRenderFunction<{ open(order: Order): void }> = ({ }, ref) => {
   const [form] = useForm()
 
   const [visible, setVisible] = useState<boolean>(false)
+  const [order, setOrder] = useState<Order>()
 
-  const { products, setProducts } = useContext(ProductContext)
+  const { orders, setOrders } = useContext(OrderContext)
 
   useImperativeHandle(ref, () => ({
     open
   }))
 
-  const open = (): void => {
+  const open = (order: Order): void => {
     setVisible(true)
+    setOrder(order)
+
+    // form.setFieldsValue({
+    //   name: order.name,
+    //   price: order.price
+    // })
   }
 
   const close = (): void => {
@@ -31,16 +39,29 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) 
 
   const onFinish = async (values: { name: string, price: number }) => {
     try {
-      const { data } = await createProduct({
-        name: values.name,
-        price: formatPriceToSave(values.price)
-      })
+      if (order) {
+        // await updateOrder({
+        //   id: order.id,
+        //   name: values.name,
+        //   price: formatPriceToSave(values.price)
+        // })
 
-      setProducts([...products, data])
+        // setOrders(orders.map(currentOrder => {
+        //   if (currentOrder.id === order.id) {
+        //     return {
+        //       id: order.id,
+        //       name: values.name,
+        //       price: values.price
+        //     }
+        //   }
 
-      Notification.success('Sucesso', 'Produto cadastrado com sucesso')
+        //   return currentOrder
+        // }))
 
-      close()
+        Notification.success('Sucesso', 'Produto editado com sucesso')
+
+        close()
+      }
     } catch (error) {
       Notification.error('Erro', error.response.data.message)
     }
@@ -100,4 +121,4 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) 
   )
 }
 
-export default forwardRef(AddProductDrawer)
+export default forwardRef(EditOrderDrawer)

@@ -2,18 +2,18 @@ import React, { forwardRef, ForwardRefRenderFunction, FunctionComponent, useCont
 import { useForm } from 'antd/lib/form/Form'
 import { Form, Row, Col, Input, Button, Drawer, Space } from 'antd'
 
-import StyledTitle from '../../../components/StyledTitle'
-import Notification from '../../../helpers/notification'
+import StyledTitle from '../../../../components/StyledTitle'
+import Notification from '../../../../helpers/notification'
 
-import { CompanyCategoryContext } from '../../../contexts/CompanyCategoryContext'
-import { createCompanyCategory } from '../../../requests'
+import { ProductCategoryContext } from '../../../../contexts/ProductCategoryContext'
+import { createProductCategory } from '../../../../requests'
 
-const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
+const AddProductCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
   const [form] = useForm()
 
   const [visible, setVisible] = useState<boolean>(false)
 
-  const { companyCategories, setCompanyCategories } = useContext(CompanyCategoryContext)
+  const { productCategories, setProductCategories } = useContext(ProductCategoryContext)
 
   useImperativeHandle(ref, () => ({
     open
@@ -30,13 +30,13 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
 
   const onFinish = async (values: { name: string }) => {
     try {
-      const { data } = await createCompanyCategory({
+      const { data } = await createProductCategory({
         name: values.name
       })
 
-      setCompanyCategories([...companyCategories, data])
+      setProductCategories([...productCategories, data])
 
-      Notification.success('Sucesso', 'Categoria de empresa cadastrada com sucesso')
+      Notification.success('Sucesso', 'Categoria de produto cadastrado com sucesso')
 
       close()
     } catch (error) {
@@ -50,7 +50,7 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
       closable={true}
       onClose={close}
       placement="right"
-      title={<StyledTitle level={2}>Nova Categoria de Empresa</StyledTitle>}
+      title={<StyledTitle level={2}>Nova Categoria de Produto</StyledTitle>}
       width={720}
       destroyOnClose={true}
       footer={
@@ -82,4 +82,4 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
   )
 }
 
-export default forwardRef(AddCompanyCategoryDrawer)
+export default forwardRef(AddProductCategoryDrawer)

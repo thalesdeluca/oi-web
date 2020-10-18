@@ -2,12 +2,12 @@ import React, { FunctionComponent, useContext, useEffect } from "react";
 import { Table, Space, Button, Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import CompanyCategory from "../../../interfaces/CompanyCategory";
+import CompanyCategory from "../../../../interfaces/CompanyCategory";
 
-import { CompanyCategoryContext } from "../../../contexts/CompanyCategoryContext";
-import { deleteCompanyCategory, getCompanyCategories } from "../../../requests";
+import { CompanyCategoryContext } from "../../../../contexts/CompanyCategoryContext";
+import { deleteCompanyCategory, getCompanyCategories } from "../../../../requests";
 
-import Notification from '../../../helpers/notification'
+import Notification from '../../../../helpers/notification'
 
 const { Column } = Table
 

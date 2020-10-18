@@ -2,13 +2,13 @@ import React, { FunctionComponent, useRef } from 'react'
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
-import StyledTitle from '../../components/StyledTitle'
-import ContentCard from '../../components/ContentCard'
-import ContentHeader from '../../components/ContentHeader'
+import StyledTitle from '../../../components/StyledTitle'
+import ContentCard from '../../../components/ContentCard'
+import ContentHeader from '../../../components/ContentHeader'
 import ProductTable from './ProductTable'
 import AddProductDrawer from './AddProductDrawer'
 
-import ProductProvider from '../../contexts/ProductContext'
+import ProductProvider from '../../../contexts/ProductContext'
 
 import './styles.scss'
 

@@ -2,19 +2,17 @@ import React, { forwardRef, ForwardRefRenderFunction, FunctionComponent, useCont
 import { useForm } from 'antd/lib/form/Form'
 import { Form, Row, Col, Input, Button, Drawer, Space, InputNumber } from 'antd'
 
-import StyledTitle from '../../../components/StyledTitle'
-import Notification from '../../../helpers/notification'
-import Product from '../../../interfaces/Product'
+import StyledTitle from '../../../../components/StyledTitle'
+import Notification from '../../../../helpers/notification'
 
-import { ProductContext } from '../../../contexts/ProductContext'
-import { updateProduct } from '../../../requests'
-import { formatPriceToSave } from '../../../helpers/formatters'
+import { ProductContext } from '../../../../contexts/ProductContext'
+import { createProduct } from '../../../../requests'
+import { formatPriceToSave } from '../../../../helpers/formatters'
 
-const EditProductDrawer: ForwardRefRenderFunction<{ open(product: Product): void }> = ({ }, ref) => {
+const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
   const [form] = useForm()
 
   const [visible, setVisible] = useState<boolean>(false)
-  const [product, setProduct] = useState<Product>()
 
   const { products, setProducts } = useContext(ProductContext)
 
@@ -22,14 +20,8 @@ const EditProductDrawer: ForwardRefRenderFunction<{ open(product: Product): void
     open
   }))
 
-  const open = (product: Product): void => {
+  const open = (): void => {
     setVisible(true)
-    setProduct(product)
-
-    form.setFieldsValue({
-      name: product.name,
-      price: product.price
-    })
   }
 
   const close = (): void => {
@@ -39,29 +31,16 @@ const EditProductDrawer: ForwardRefRenderFunction<{ open(product: Product): void
 
   const onFinish = async (values: { name: string, price: number }) => {
     try {
-      if (product) {
-        await updateProduct({
-          id: product.id,
-          name: values.name,
-          price: formatPriceToSave(values.price)
-        })
+      const { data } = await createProduct({
+        name: values.name,
+        price: formatPriceToSave(values.price)
+      })
 
-        setProducts(products.map(currentProduct => {
-          if (currentProduct.id === product.id) {
-            return {
-              id: product.id,
-              name: values.name,
-              price: values.price
-            }
-          }
+      setProducts([...products, data])
 
-          return currentProduct
-        }))
+      Notification.success('Sucesso', 'Produto cadastrado com sucesso')
 
-        Notification.success('Sucesso', 'Produto editado com sucesso')
-
-        close()
-      }
+      close()
     } catch (error) {
       Notification.error('Erro', error.response.data.message)
     }
@@ -121,4 +100,4 @@ const EditProductDrawer: ForwardRefRenderFunction<{ open(product: Product): void
   )
 }
 
-export default forwardRef(EditProductDrawer)
+export default forwardRef(AddProductDrawer)

@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
 
 import Menu from "../layout/Menu";
-import CompanyPage from "../pages/Company";
-import CompanyCategoryPage from "../pages/CompanyCategory";
-import ProductCategoryPage from "../pages/ProductCategory";
-import ProductPage from "../pages/Product";
+import CompanyCategoryPage from "../pages/Admin/CompanyCategory";
+import ProductCategoryPage from "../pages/Admin/ProductCategory";
+import ProductPage from "../pages/Company/Product";
+import OrderPage from "../pages/Company/Order";
 import LoginPage from "../pages/Login";
 import PrivateRoute from './PrivateRoute'
 
@@ -21,10 +21,10 @@ const Router: React.FC = () => {
         <Route path="/login" component={LoginPage} />
 
         <Menu routes={isAdmin ? adminMenu : companyMenu}>
-          <PrivateRoute exact path="/company" component={CompanyPage} />
           <PrivateRoute exact path="/company-category" component={CompanyCategoryPage} />
           <PrivateRoute exact path="/product-category" component={ProductCategoryPage} />
           <PrivateRoute exact path="/product" component={ProductPage} />
+          <PrivateRoute exact path="/order" component={OrderPage} />
         </Menu>
       </Switch>
     </BrowserRouter>
