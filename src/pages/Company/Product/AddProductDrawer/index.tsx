@@ -1,50 +1,87 @@
-import React, { forwardRef, ForwardRefRenderFunction, FunctionComponent, useContext, useImperativeHandle, useState } from 'react'
-import { useForm } from 'antd/lib/form/Form'
-import { Form, Row, Col, Input, Button, Drawer, Space, InputNumber } from 'antd'
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  FunctionComponent,
+  useContext,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { useForm } from "antd/lib/form/Form";
+import {
+  Form,
+  Row,
+  Col,
+  Input,
+  Button,
+  Drawer,
+  Space,
+  InputNumber,
+  Upload,
+} from "antd";
 
-import StyledTitle from '../../../../components/StyledTitle'
-import Notification from '../../../../helpers/notification'
+import StyledTitle from "../../../../components/StyledTitle";
+import Notification from "../../../../helpers/notification";
 
-import { ProductContext } from '../../../../contexts/ProductContext'
-import { createProduct } from '../../../../requests'
-import { formatPriceToSave } from '../../../../helpers/formatters'
+import { ProductContext } from "../../../../contexts/ProductContext";
+import { createProduct } from "../../../../requests";
+import { formatPriceToSave } from "../../../../helpers/formatters";
+import { UploadOutlined } from "@ant-design/icons";
+import { uploadProduct } from "../../../../requests/images";
 
-const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) => {
-  const [form] = useForm()
+const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
+  {},
+  ref
+) => {
+  const [form] = useForm();
 
-  const [visible, setVisible] = useState<boolean>(false)
+  const [visible, setVisible] = useState<boolean>(false);
 
-  const { products, setProducts } = useContext(ProductContext)
+  const { products, setProducts, setPhoto } = useContext(ProductContext);
 
   useImperativeHandle(ref, () => ({
-    open
-  }))
+    open,
+  }));
 
   const open = (): void => {
-    setVisible(true)
-  }
+    setVisible(true);
+  };
 
   const close = (): void => {
-    setVisible(false)
-    form.resetFields()
-  }
+    setVisible(false);
+    form.resetFields();
+  };
 
-  const onFinish = async (values: { name: string, price: number }) => {
+  const onFinish = async (values: { name: string; price: number }) => {
     try {
       const { data } = await createProduct({
         name: values.name,
-        price: formatPriceToSave(values.price)
-      })
+        price: formatPriceToSave(values.price),
+      });
 
-      setProducts([...products, data])
+      setProducts([...products, data]);
 
-      Notification.success('Sucesso', 'Produto cadastrado com sucesso')
+      Notification.success("Sucesso", "Produto cadastrado com sucesso");
 
-      close()
+      close();
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error("Erro", error.response.data.message);
     }
-  }
+  };
+
+  const changePhoto = async (img: any) => {
+    console.log(img);
+    const form = new FormData();
+
+    form.append("image", img.file.originFileObj);
+
+    const { data } = await uploadProduct(form);
+    if (data) {
+      Notification.success("Sucesso", "Imagem salva com sucesso");
+      setPhoto(data);
+    } else {
+      Notification.success("Erro", "Erro ao enviar imagem");
+    }
+  };
 
   return (
     <Drawer
@@ -57,10 +94,7 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) 
       destroyOnClose={true}
       footer={
         <Space>
-          <Button
-            type="primary"
-            onClick={() => form.submit()}
-          >
+          <Button type="primary" onClick={() => form.submit()}>
             Criar
           </Button>
           <Button onClick={close}>Cancelar</Button>
@@ -69,35 +103,49 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref) 
     >
       <Form onFinish={onFinish} layout="vertical" form={form}>
         <Row gutter={24}>
-          <Col lg={{ span: '24' }}>
-            <Form.Item
-              label="Nome"
-              name="name"
-              rules={[{ required: true }]}
-            >
+          <Col lg={{ span: "24" }}>
+            <Form.Item label="Nome" name="name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
           </Col>
         </Row>
 
         <Row gutter={24}>
-          <Col lg={{ span: '24' }}>
-            <Form.Item
-              label="Preço"
-              name="price"
-              rules={[{ required: true }]}
-            >
+          <Col lg={{ span: "24" }}>
+            <Form.Item label="Preço" name="price" rules={[{ required: true }]}>
               <InputNumber
-                style={{ width: '100%' }}
-                formatter={value => `$ ${value}`.replace(/\B(?=(\d{2})+(?!\d))/g, ',')}
-                parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+                style={{ width: "100%" }}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{2})+(?!\d))/g, ",")
+                }
+                parser={(value: any) => value.replace(/\$\s?|(,*)/g, "")}
               />
             </Form.Item>
           </Col>
         </Row>
+
+        <Row gutter={24}>
+          <Col span={24}>
+            <img
+              src={
+                "https://www.bauducco.com.br/wp-content/uploads/2017/09/default-placeholder-1-2.png"
+              }
+              height={130}
+              width={130}
+            />
+          </Col>
+        </Row>
+
+        <Row gutter={24}>
+          <Col span={24}>
+            <Upload onChange={changePhoto} showUploadList={false}>
+              <Button icon={<UploadOutlined />}>Alterar Imagem</Button>
+            </Upload>
+          </Col>
+        </Row>
       </Form>
     </Drawer>
-  )
-}
+  );
+};
 
-export default forwardRef(AddProductDrawer)
+export default forwardRef(AddProductDrawer);
