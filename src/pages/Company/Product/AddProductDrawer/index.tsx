@@ -17,6 +17,7 @@ import {
   Space,
   InputNumber,
   Upload,
+  Select,
 } from "antd";
 
 import StyledTitle from "../../../../components/StyledTitle";
@@ -27,6 +28,7 @@ import { createProduct } from "../../../../requests";
 import { formatPriceToSave } from "../../../../helpers/formatters";
 import { UploadOutlined } from "@ant-design/icons";
 import { uploadProduct } from "../../../../requests/images";
+import { ProductCategoryContext } from "../../../../contexts/ProductCategoryContext";
 
 const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
   {},
@@ -36,7 +38,8 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
 
   const [visible, setVisible] = useState<boolean>(false);
 
-  const { products, setProducts, setPhoto } = useContext(ProductContext);
+  const { products, setProducts, setPhoto, photo } = useContext(ProductContext);
+  const { productCategories } = useContext(ProductCategoryContext);
 
   useImperativeHandle(ref, () => ({
     open,
@@ -48,18 +51,26 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
 
   const close = (): void => {
     setVisible(false);
+    setPhoto(null);
     form.resetFields();
   };
 
-  const onFinish = async (values: { name: string; price: number }) => {
+  const onFinish = async (values: {
+    name: string;
+    price: number;
+    product_category_id: number;
+  }) => {
     try {
       const { data } = await createProduct({
         name: values.name,
         price: formatPriceToSave(values.price),
+        product_category_id: values.product_category_id,
       });
 
+      const photoData = await changePhoto(photo, data?.id);
+      data.productImages = photoData;
       setProducts([...products, data]);
-
+      setPhoto(photoData);
       Notification.success("Sucesso", "Produto cadastrado com sucesso");
 
       close();
@@ -68,16 +79,16 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
     }
   };
 
-  const changePhoto = async (img: any) => {
-    console.log(img);
+  const changePhoto = async (img: any, id: string) => {
     const form = new FormData();
 
-    form.append("image", img.file.originFileObj);
+    form.append("image", img?.file?.originFileObj);
+    form.append("productId", id);
 
     const { data } = await uploadProduct(form);
     if (data) {
       Notification.success("Sucesso", "Imagem salva com sucesso");
-      setPhoto(data);
+      return data;
     } else {
       Notification.success("Erro", "Erro ao enviar imagem");
     }
@@ -125,10 +136,33 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
         </Row>
 
         <Row gutter={24}>
+          <Col lg={{ span: "12" }}>
+            <Form.Item
+              label="Categoria do Produto"
+              name="product_category_id"
+              rules={[{ required: true, message: "Categoria é obrigatório" }]}
+            >
+              <Select>
+                {productCategories?.map((productCategory) => (
+                  <Select.Option
+                    key={productCategory.id}
+                    value={productCategory.id}
+                  >
+                    {productCategory.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={24}>
           <Col span={24}>
             <img
               src={
-                "https://www.bauducco.com.br/wp-content/uploads/2017/09/default-placeholder-1-2.png"
+                photo?.file?.originFileObj
+                  ? URL.createObjectURL(photo?.file?.originFileObj)
+                  : "https://www.bauducco.com.br/wp-content/uploads/2017/09/default-placeholder-1-2.png"
               }
               height={130}
               width={130}
@@ -138,7 +172,7 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
 
         <Row gutter={24}>
           <Col span={24}>
-            <Upload onChange={changePhoto} showUploadList={false}>
+            <Upload onChange={(img) => setPhoto(img)} showUploadList={false}>
               <Button icon={<UploadOutlined />}>Alterar Imagem</Button>
             </Upload>
           </Col>

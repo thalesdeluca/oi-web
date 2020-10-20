@@ -6,4 +6,5 @@ export default interface Product extends BaseInterface {
   name: string;
   price: number;
   productImages: Image;
+  product_category_id: number;
 }

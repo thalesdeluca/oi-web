@@ -1,56 +1,79 @@
-import { getToken } from '../../helpers/localStorage'
+import { getToken } from "../../helpers/localStorage";
 
-import api from '../../config/api'
+import api from "../../config/api";
 
-const createProduct = async ({ name, price }: { name: string, price: number }) => {
-  const token = getToken()
+const createProduct = async ({
+  name,
+  price,
+  product_category_id,
+}: {
+  name: string;
+  price: number;
+  product_category_id: number;
+}) => {
+  const token = getToken();
 
-  return api.post('/products', {
-    name,
-    price
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}`
+  return api.post(
+    "/products",
+    {
+      name,
+      price,
+      product_category_id,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  })
-}
+  );
+};
 
-const updateProduct = async ({ id, name, price }: { id: number, name: string, price: number }) => {
-  const token = getToken()
+const updateProduct = async ({
+  id,
+  name,
+  price,
+  product_category_id,
+}: {
+  id: number;
+  name: string;
+  price: number;
+  product_category_id: number;
+}) => {
+  const token = getToken();
 
-  return api.put(`/products/${id}`, {
-    name,
-    price
-  }, {
-    headers: {
-      Authorization: `Bearer ${token}`
+  return api.put(
+    `/products/${id}`,
+    {
+      name,
+      price,
+      product_category_id,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-  })
-}
+  );
+};
 
 const deleteProduct = async ({ id }: { id: number }) => {
-  const token = getToken()
+  const token = getToken();
 
   return api.delete(`/products/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 const getOwnProducts = async ({}: {}) => {
-  const token = getToken()
+  const token = getToken();
 
-  return api.get('/me/products', {
+  return api.get("/me/products", {
     headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
-export {
-  createProduct,
-  getOwnProducts,
-  deleteProduct,
-  updateProduct
-}
+export { createProduct, getOwnProducts, deleteProduct, updateProduct };

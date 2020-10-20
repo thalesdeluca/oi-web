@@ -6,29 +6,23 @@ import Image from "../../interfaces/Image";
 interface ProductContextInterface {
   products: Partial<Product>[];
   setProducts: (product: Partial<Product>[]) => void;
-  setPhoto: (productImage: Image) => void;
+  setPhoto: (productImage: any) => void;
+  photo: any;
 }
 
 export const ProductContext = React.createContext<ProductContextInterface>({
   products: [],
   setProducts: () => null,
-  setPhoto: (productImage: Image) => null,
+  setPhoto: (productImage: File) => null,
+  photo: null,
 });
 
 const ProductProvider: FunctionComponent = ({ children }) => {
   const [products, setProducts] = useState<Partial<Product>[]>([]);
-
-  const setPhoto = (profileImage: Image): void => {
-    const cloneCompany = products;
-
-    if (cloneCompany && profileImage) {
-      //cloneCompany.profileImages = profileImage;
-      //setProducts({ ...cloneCompany });
-    }
-  };
+  const [photo, setPhoto] = useState<any>();
 
   return (
-    <ProductContext.Provider value={{ products, setProducts, setPhoto }}>
+    <ProductContext.Provider value={{ products, setProducts, setPhoto, photo }}>
       {children}
     </ProductContext.Provider>
   );
