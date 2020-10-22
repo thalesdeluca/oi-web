@@ -19,7 +19,7 @@ const Router: React.FC = () => {
   const { isAdmin } = useContext(CompanyContext);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/deliverie-front">
       <Switch>
         <Route path="/login" component={LoginPage} />
 
