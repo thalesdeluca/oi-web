@@ -34,7 +34,7 @@ import { uploadProduct } from "../../../../requests/images";
 
 const EditProductDrawer: ForwardRefRenderFunction<{
   open(product: Product): void;
-}> = ({}, ref) => {
+}> = ({ }, ref) => {
   const [form] = useForm();
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -143,7 +143,7 @@ const EditProductDrawer: ForwardRefRenderFunction<{
       <Form onFinish={onFinish} layout="vertical" form={form}>
         <Row gutter={24}>
           <Col lg={{ span: "24" }}>
-            <Form.Item label="Nome" name="name" rules={[{ required: true }]}>
+            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Nome é obrigatório" }]}>
               <Input />
             </Form.Item>
           </Col>
@@ -151,7 +151,7 @@ const EditProductDrawer: ForwardRefRenderFunction<{
 
         <Row gutter={24}>
           <Col lg={{ span: "24" }}>
-            <Form.Item label="Preço" name="price" rules={[{ required: true }]}>
+            <Form.Item label="Preço" name="price" rules={[{ required: true, message: "Preço é obrigatório" }]}>
               <InputNumber
                 style={{ width: "100%" }}
                 formatter={(value) =>
@@ -164,7 +164,7 @@ const EditProductDrawer: ForwardRefRenderFunction<{
         </Row>
 
         <Row gutter={24}>
-          <Col lg={{ span: "12" }}>
+          <Col lg={{ span: 24 }}>
             <Form.Item
               label="Categoria do Produto"
               name="product_category_id"

@@ -3,36 +3,21 @@ import { Table, Space, Button, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 import Order from "../../../../interfaces/Order";
-import Notification from '../../../../helpers/notification'
 import ViewOrderModal from '../ViewOrderModal'
 
 import { OrderContext } from "../../../../contexts/OrderContext";
-import { getOwnOrders } from "../../../../requests";
+import { orderStatusObj } from "../../../../constants/orderStatus";
 
 const { Column } = Table
 
 const OrderTable: FunctionComponent = () => {
   const viewOrderModal = useRef<{ open(order: Order): void }>(null)
 
-  const { orders, setOrders } = useContext(OrderContext)
-
-  const getData = async () => {
-    try {
-      const { data } = await getOwnOrders({})
-
-      setOrders(data)
-    } catch (error) {
-      Notification.error('Erro', error.response.data.message)
-    }
-  }
+  const { orders } = useContext(OrderContext)
 
   const openViewOrderModal = (order: Order): void => {
     viewOrderModal.current?.open(order)
   }
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   return (
     <>
@@ -42,6 +27,11 @@ const OrderTable: FunctionComponent = () => {
       >
         <Column<Order> title="Pedido" dataIndex="id" key="id" />
         <Column<Order> title="Preço Total" dataIndex="total_price" key="total_price" />
+        <Column<Order> title="Status" dataIndex="status" key="total_price" render={
+          (value: 'waiting' | 'cancelled' | 'confirmed') => {
+            return orderStatusObj[value]
+          }
+        } />
         <Column<Order>
           title="Ação"
           key="action"

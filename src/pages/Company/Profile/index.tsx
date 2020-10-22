@@ -1,20 +1,18 @@
-import React, { FunctionComponent, useContext, useEffect, useRef } from "react";
-import { Button, Row, Col, Descriptions, Image, Input, Upload } from "antd";
+import React, { FunctionComponent, useContext, useRef } from "react";
+import { Button, Row, Col, Descriptions, Upload } from "antd";
 import {
   EditOutlined,
-  PlusOutlined,
-  CameraOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 
 import { CompanyContext } from "../../../contexts/CompanyContext";
+import { uploadCompany } from "../../../requests/images";
 
 import StyledTitle from "../../../components/StyledTitle";
 import ContentCard from "../../../components/ContentCard";
 import ContentHeader from "../../../components/ContentHeader";
 import CompanyCategoryProvider from "../../../contexts/CompanyCategoryContext";
 import EditProfileDrawer from "./EditProfileDrawer";
-import { uploadCompany } from "../../../requests/images";
 import Notification from "../../../helpers/notification";
 
 const ProfilePage: FunctionComponent = () => {
@@ -27,12 +25,14 @@ const ProfilePage: FunctionComponent = () => {
   const { company, setPhoto } = useContext(CompanyContext);
 
   const changePhoto = async (img: any) => {
-    console.log(img);
+
+    console.log(img)
     const form = new FormData();
 
     form.append("image", img.file.originFileObj);
 
     const { data } = await uploadCompany(form);
+
     if (data) {
       Notification.success("Sucesso", "Imagem salva com sucesso");
       setPhoto(data);

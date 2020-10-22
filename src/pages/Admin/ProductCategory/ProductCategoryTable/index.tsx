@@ -62,7 +62,7 @@ const ProductCategoryTable: FunctionComponent = () => {
               <Button>
                 <DeleteOutlined />
               </Button>
-            </Popconfirm>,
+            </Popconfirm>
           </Space>
         )}
       />

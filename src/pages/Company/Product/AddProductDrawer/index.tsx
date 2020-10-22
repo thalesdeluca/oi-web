@@ -31,7 +31,7 @@ import { uploadProduct } from "../../../../requests/images";
 import { ProductCategoryContext } from "../../../../contexts/ProductCategoryContext";
 
 const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
-  {},
+  { },
   ref
 ) => {
   const [form] = useForm();
@@ -115,7 +115,7 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
       <Form onFinish={onFinish} layout="vertical" form={form}>
         <Row gutter={24}>
           <Col lg={{ span: "24" }}>
-            <Form.Item label="Nome" name="name" rules={[{ required: true }]}>
+            <Form.Item label="Nome" name="name" rules={[{ required: true, message: "Nome é obrigatório" }]}>
               <Input />
             </Form.Item>
           </Col>
@@ -123,7 +123,7 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
 
         <Row gutter={24}>
           <Col lg={{ span: "24" }}>
-            <Form.Item label="Preço" name="price" rules={[{ required: true }]}>
+            <Form.Item label="Preço" name="price" rules={[{ required: true, message: "Preço é obrigatório" }]}>
               <InputNumber
                 style={{ width: "100%" }}
                 formatter={(value) =>
@@ -136,7 +136,7 @@ const AddProductDrawer: ForwardRefRenderFunction<{ open(): void }> = (
         </Row>
 
         <Row gutter={24}>
-          <Col lg={{ span: "12" }}>
+          <Col lg={{ span: 24 }}>
             <Form.Item
               label="Categoria do Produto"
               name="product_category_id"

@@ -13,6 +13,7 @@ import PrivateRoute from "./PrivateRoute";
 import { adminMenu, companyMenu } from "../layout/items";
 import { CompanyContext } from "../contexts/CompanyContext";
 import ProductCategoryProvider from "../contexts/ProductCategoryContext";
+import OrderProvider from "../contexts/OrderContext";
 
 const Router: React.FC = () => {
   const { isAdmin } = useContext(CompanyContext);
@@ -38,7 +39,9 @@ const Router: React.FC = () => {
           <ProductCategoryProvider>
             <PrivateRoute exact path="/product" component={ProductPage} />
           </ProductCategoryProvider>
-          <PrivateRoute exact path="/order" component={OrderPage} />
+          <OrderProvider>
+            <PrivateRoute exact path="/order" component={OrderPage} />
+          </OrderProvider>
         </Menu>
       </Switch>
     </BrowserRouter>
