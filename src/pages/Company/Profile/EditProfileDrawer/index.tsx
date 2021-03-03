@@ -80,7 +80,7 @@ const EditProfileDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref)
         close()
       }
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 
@@ -90,7 +90,7 @@ const EditProfileDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ }, ref)
 
       setCompanyCategories(data)
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

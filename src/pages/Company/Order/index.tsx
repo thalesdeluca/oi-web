@@ -23,7 +23,7 @@ const OrderPage: FunctionComponent = () => {
 
       setOrders(data)
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

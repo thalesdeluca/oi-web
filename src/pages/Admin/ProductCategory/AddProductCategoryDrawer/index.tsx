@@ -40,7 +40,7 @@ const AddProductCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
 
       close()
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

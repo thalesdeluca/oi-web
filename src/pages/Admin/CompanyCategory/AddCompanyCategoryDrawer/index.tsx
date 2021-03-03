@@ -30,17 +30,15 @@ const AddCompanyCategoryDrawer: ForwardRefRenderFunction<{ open(): void }> = ({ 
 
   const onFinish = async (values: { name: string }) => {
     try {
-      const { data } = await createCompanyCategory({
+      await createCompanyCategory({
         name: values.name
       })
-
-      setCompanyCategories([...companyCategories, data])
 
       Notification.success('Sucesso', 'Categoria de empresa cadastrada com sucesso')
 
       close()
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

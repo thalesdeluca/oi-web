@@ -43,7 +43,7 @@ const LoginPage: FunctionComponent = () => {
 
       Notification.success('Sucesso', 'Login efetuado com sucesso')
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

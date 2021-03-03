@@ -38,7 +38,7 @@ const ViewOrderModal: ForwardRefRenderFunction<{ open(order: Order): void }> = (
 
       setOrders(data)
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 
@@ -52,7 +52,7 @@ const ViewOrderModal: ForwardRefRenderFunction<{ open(order: Order): void }> = (
 
       await close()
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 
@@ -66,7 +66,7 @@ const ViewOrderModal: ForwardRefRenderFunction<{ open(order: Order): void }> = (
 
       await close()
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 

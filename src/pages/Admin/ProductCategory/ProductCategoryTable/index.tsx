@@ -21,7 +21,7 @@ const ProductCategoryTable: FunctionComponent = () => {
 
       setProductCategories(data)
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 
@@ -38,7 +38,7 @@ const ProductCategoryTable: FunctionComponent = () => {
 
       Notification.success('Sucesso', 'Categoria deletada com sucesso')
     } catch (error) {
-      Notification.error('Erro', error.response.data.message)
+      Notification.error('Erro', error?.response?.data?.message)
     }
   }
 
